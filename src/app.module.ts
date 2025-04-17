@@ -2,22 +2,23 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseService } from './database/database.service';
 import configuration from './config/configuration';
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/users.service';
-import { TodosService } from './todos/todos.service';
-import { TodosController } from './todos/todos.controller';
-import { UsersRepository } from './users/users.repository';
-import { PrismaService } from './database/prisma.service';
+import { UsersModule } from './users/users.module';
+import { TodosModule } from './todos/todos.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-    envFilePath: ['.env', '.env.local'],
-    load: [configuration],
-  })],
-  controllers: [AppController, UsersController, TodosController],
-  providers: [AppService, DatabaseService, PrismaService, UsersService, TodosService, UsersRepository],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '.env.local'],
+      load: [configuration],
+    }),
+    UsersModule,
+    TodosModule,
+    DatabaseModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
