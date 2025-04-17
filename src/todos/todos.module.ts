@@ -5,6 +5,6 @@ import { DatabaseService } from 'src/database/database.service';
 
 @Module({
   controllers: [TodosController],
-  providers: [TodosService, DatabaseService],
+  providers: [TodosService],
 })
 export class TodosModule {}

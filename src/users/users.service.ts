@@ -28,6 +28,12 @@ export class UsersService {
     ]);
   }
 
+  findOneByEmail(email: string) {
+    return this.DatabaseService.query('SELECT * FROM users WHERE email = $1', [
+      email,
+    ]);
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     // const keys = Object.keys(updateUserDto);
     // const valuesString = keys

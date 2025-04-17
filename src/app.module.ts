@@ -5,7 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { UsersModule } from './users/users.module';
 import { TodosModule } from './todos/todos.module';
-import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -14,9 +16,15 @@ import { DatabaseModule } from './database/database.module';
       envFilePath: ['.env', '.env.local'],
       load: [configuration],
     }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1h' },
+    }),
     UsersModule,
     TodosModule,
-    DatabaseModule,
+    AuthModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
